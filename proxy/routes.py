@@ -1,5 +1,5 @@
-import aiohttp
 from aiohttp import web
+
 
 ESCAPED_CHARS = "!@#$\'\""
 OUTPUT_URL = 'http://annuaire-entreprises.dataeng.etalab.studio/rpc/get_unite_legale'
@@ -21,9 +21,9 @@ async def search_endpoint(request):
         'per_page_ask': request.rel_url.query['per_page']
     }
 
-    async with aiohttp.ClientSession() as session:
+    async with request.app['http_session'] as session:
         async with session.post(OUTPUT_URL, json=json_body) as resp:
-            print(resp.status)
-            print(await resp.text())
+            res_status = resp.status
+            res = await resp.json()
 
-    return web.Response()
+    return web.json_response(res, status=res_status)
