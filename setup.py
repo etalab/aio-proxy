@@ -7,14 +7,14 @@ from setuptools import find_packages, setup
 def read_version():
     regexp = re.compile(r"^__version__\W*=\W*'([\d.abrc]+)'")
     init_py = os.path.join(os.path.dirname(__file__),
-                           'proxy', '__init__.py')
+                           'aio_proxy', '__init__.py')
     with open(init_py) as f:
         for line in f:
             match = regexp.match(line)
             if match is not None:
                 return match.group(1)
         else:
-            msg = 'Cannot find version in proxy/__init__.py'
+            msg = 'Cannot find version in aio_proxy/__init__.py'
             raise RuntimeError(msg)
 
 
@@ -23,7 +23,7 @@ install_requires = [
 ]
 
 
-setup(name='proxy',
+setup(name='aio-proxy',
       version=read_version(),
       description='Async http proxy',
       platforms=['POSIX'],
